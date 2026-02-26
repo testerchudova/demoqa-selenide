@@ -1,0 +1,16 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- общий уровень логов -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- если будет слишком шумно, можно Selenium притушить -->
+    <logger name="org.openqa.selenium" level="WARN"/>
+    <logger name="com.codeborne.selenide" level="INFO"/>
+</configuration>
