@@ -17,12 +17,10 @@ public class PrimitiveOperations {
         System.out.println(mult);
         System.out.println(div);
 
-
         // 1) Арифметические операции int + double в одном выражении
         double result = a + b * 2.5 - 4 / 2.0;
         System.out.println("\nint + double:");
         System.out.println(result);
-
 
         // 2) Логические операции
         boolean greater = a > b;
