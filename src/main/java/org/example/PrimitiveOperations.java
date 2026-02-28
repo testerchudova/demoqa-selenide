@@ -1,3 +1,5 @@
+package org.example;
+
 public class PrimitiveOperations {
 
     public static void main(String[] args) {
