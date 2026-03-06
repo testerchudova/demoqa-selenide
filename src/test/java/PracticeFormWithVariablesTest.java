@@ -1,13 +1,11 @@
 package testdata;
 
 import org.junit.jupiter.api.Test;
-import testdata.TestBaseForPr;
 
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.$;
 import static testdata.TestDataOne.*;
 
 public class PracticeFormWithVariablesTest extends TestBaseForPr {
@@ -17,7 +15,7 @@ public class PracticeFormWithVariablesTest extends TestBaseForPr {
         $("#firstName").setValue(FIRST_NAME);
         $("#lastName").setValue(LAST_NAME);
         $("#userEmail").setValue(EMAIL);
-        $(byText(GENDER)).click();
+        $("#genterWrapper").$(byText(GENDER)).click();
         $("#userNumber").setValue(MOBILE);
 
         $("#dateOfBirthInput").scrollTo().click();
@@ -29,15 +27,15 @@ public class PracticeFormWithVariablesTest extends TestBaseForPr {
         $(".react-datepicker__day--" + DAY_VALUE + ":not(.react-datepicker__day--outside-month)").click();
 
         $("#subjectsInput").setValue(SUBJECT).pressEnter();
-        $(byText(HOBBY)).click();
+        $("#hobbiesWrapper").$(byText(HOBBY)).click();
         $("#uploadPicture").uploadFromClasspath(PICTURE);
         $("#currentAddress").setValue(ADDRESS);
 
         $("#state").click();
-        $(byText(STATE)).click();
+        $("#stateCity-wrapper").$(byText(STATE)).click();
 
         $("#city").click();
-        $(byText(CITY)).click();
+        $("#stateCity-wrapper").$(byText(CITY)).click();
 
         $("#submit").click();
 
@@ -61,7 +59,7 @@ public class PracticeFormWithVariablesTest extends TestBaseForPr {
     void fillMandatoryFieldsTest() {
         $("#firstName").setValue(FIRST_NAME);
         $("#lastName").setValue(LAST_NAME);
-        $(byText(GENDER)).click();
+        $("#genterWrapper").$(byText(GENDER)).click();
         $("#userNumber").setValue(MOBILE);
 
         $("#submit").click();
