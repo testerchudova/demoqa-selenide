@@ -120,4 +120,13 @@ public class RegistrationPage {
                 .shouldHave(text(value));
         return this;
     }
+    public RegistrationPage checkInvalidMobileValue(String value) {
+        userNumberInput.shouldHave(com.codeborne.selenide.Condition.value(value));
+        return this;
+    }
+
+    public RegistrationPage checkThatFormWasNotSubmitted() {
+        $(".modal-content").shouldNotBe(com.codeborne.selenide.Condition.visible);
+        return this;
+    }
 }

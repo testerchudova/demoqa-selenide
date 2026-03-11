@@ -50,4 +50,15 @@ public class PracticFormUsedPageTest extends TestBaseForPr {
                 .checkResult("Gender", GENDER)
                 .checkResult("Mobile", MOBILE);
     }
+    @Test
+    void negativeSubmitWithInvalidMobileTest() {
+        registrationPage.openPage()
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setGender(GENDER)
+                .setUserNumber("12345")
+                .submitForm()
+                .checkInvalidMobileValue("12345")
+                .checkThatFormWasNotSubmitted();
+    }
 }
