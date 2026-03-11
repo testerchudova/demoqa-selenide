@@ -1,7 +1,5 @@
 package testdata;
 
-import static com.codeborne.selenide.Selenide.open;
-
 public class TestDataOne {
 
     public static String FIRST_NAME = "Katya";
@@ -14,7 +12,7 @@ public class TestDataOne {
 
     public static String MONTH_VALUE = "9";       // October
     public static String YEAR_VALUE = "1995";
-    public static String DAY_VALUE = "010";
+    public static String DAY_VALUE = "10";
     public static String DATE_EXPECTED = "10 October,1995";
 
     public static String SUBJECT = "Maths";
