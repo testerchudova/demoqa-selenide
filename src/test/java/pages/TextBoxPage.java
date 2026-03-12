@@ -16,6 +16,10 @@ public class TextBoxPage {
 
     public TextBoxPage openPage() {
         open("/text-box");
+        return this;
+    }
+
+    public TextBoxPage removeBanners() {
         executeJavaScript("document.querySelector('#fixedban')?.remove()");
         executeJavaScript("document.querySelector('footer')?.remove()");
         return this;

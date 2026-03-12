@@ -1,4 +1,4 @@
-package testdata;
+package testbase;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static com.codeborne.selenide.Selenide.open;
 
-public class TestTextBoxBase {
+public class TestBaseForPr {
+
     @BeforeAll
     static void setupSelenideConfig() {
 
@@ -21,7 +22,7 @@ public class TestTextBoxBase {
     @BeforeEach
     void openPracticeForm() {
 
-        open("/text-box");
+        open("/automation-practice-form");
 
         executeJavaScript("""
                 document.getElementById('fixedban')?.remove();
@@ -29,4 +30,4 @@ public class TestTextBoxBase {
                 """);
     }
 
-}
+    }

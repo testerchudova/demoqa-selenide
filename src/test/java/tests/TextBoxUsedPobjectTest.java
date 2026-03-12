@@ -2,7 +2,7 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
-import testdata.TestTextBoxBase;
+import testbase.TestTextBoxBase;
 import static testdata.TestTextBoxData.*;
 
 public class TextBoxUsedPobjectTest extends TestTextBoxBase {
@@ -12,6 +12,7 @@ public class TextBoxUsedPobjectTest extends TestTextBoxBase {
     @Test
     void fillTextBoxFormTest() {
         textBoxPage.openPage()
+                .removeBanners()
                 .setFullName(FULL_NAME)
                 .setEmail(EMAIL)
                 .setCurrentAddress(CURRENT_ADDRESS)

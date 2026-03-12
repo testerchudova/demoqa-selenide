@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.ResultsTableComponent;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -10,6 +11,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class RegistrationPage {
 
     CalendarComponent calendar = new CalendarComponent();
+    ResultsTableComponent resultsTableComponent = new ResultsTableComponent();
+
 
     private final SelenideElement firstNameInput = $("#firstName");
     private final SelenideElement lastNameInput = $("#lastName");
@@ -26,11 +29,15 @@ public class RegistrationPage {
     private final SelenideElement submitButton = $("#submit");
     private final SelenideElement resultModal = $(".modal-content");
     private final SelenideElement resultTitle = $("#example-modal-sizes-title-lg");
-    private final SelenideElement resultTable = $(".table-responsive");
+
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        return this;
+    }
+
+    public RegistrationPage removeBanners() {
         executeJavaScript("document.querySelector('#fixedban')?.remove()");
         executeJavaScript("document.querySelector('footer')?.remove()");
         return this;
@@ -114,12 +121,10 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage checkResult(String key, String value) {
-        resultTable.$(byText(key))
-                .parent()
-                .shouldHave(text(value));
-        return this;
+    public ResultsTableComponent getResultsTable() {
+        return resultsTableComponent;
     }
+
     public RegistrationPage checkInvalidMobileValue(String value) {
         userNumberInput.shouldHave(com.codeborne.selenide.Condition.value(value));
         return this;

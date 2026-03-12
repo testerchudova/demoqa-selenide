@@ -1,6 +1,7 @@
 package testdata;
 
 import org.junit.jupiter.api.Test;
+import testbase.TestBaseForPr;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
