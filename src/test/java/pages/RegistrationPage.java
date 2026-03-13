@@ -121,8 +121,9 @@ public class RegistrationPage {
         return this;
     }
 
-    public ResultsTableComponent getResultsTable() {
-        return resultsTableComponent;
+    public RegistrationPage checkResult(String key, String value) {
+            resultsTableComponent.checkResult(key, value);
+            return this;
     }
 
     public RegistrationPage checkInvalidMobileValue(String value) {

@@ -6,10 +6,11 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ResultsTableComponent {
 
-    public void checkResult(String key, String value) {
+    public ResultsTableComponent checkResult(String key, String value) {
         $(".table-responsive")
                 .$(byText(key))
                 .parent()
                 .shouldHave(text(value));
+        return this;
     }
 }

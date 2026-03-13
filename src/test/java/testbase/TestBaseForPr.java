@@ -2,10 +2,7 @@ package testbase;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static com.codeborne.selenide.Selenide.open;
 
 public class TestBaseForPr {
 
@@ -19,15 +16,4 @@ public class TestBaseForPr {
 
     }
 
-    @BeforeEach
-    void openPracticeForm() {
-
-        open("/automation-practice-form");
-
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-    }
-
-    }
+}
