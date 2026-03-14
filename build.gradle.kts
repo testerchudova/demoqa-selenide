@@ -17,6 +17,7 @@ dependencies {
 
     // ✅ Логи (SLF4J + Logback)
     testImplementation("ch.qos.logback:logback-classic:1.5.6")
+    implementation ("com.github.javafaker:javafaker:1.0.2")
 }
 
 tasks.test {
