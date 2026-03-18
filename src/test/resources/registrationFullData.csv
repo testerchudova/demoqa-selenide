@@ -1,0 +1,6 @@
+firstName,lastName,email,gender,phone,day,month,year,subject,hobby,picture,address,state,city
+Anna,Ivanova,anna.ivanova@example.com,Female,1234567890,10,May,1995,Maths,Reading,testpic.jpg,Lenina 10,NCR,Delhi
+Petr,Sidorov,petr.sidorov@example.com,Male,9876543210,15,June,1998,English,Sports,testpic.jpg,Nevsky 25,Uttar Pradesh,Agra
+Maria,Petrova,maria.petrova@example.com,Female,1112223344,21,July,1997,Physics,Music,testpic.jpg,Tverskaya 5,Haryana,Karnal
+Ivan,Smirnov,ivan.smirnov@example.com,Male,2223334455,05,August,1996,Chemistry,Reading,testpic.jpg,Mira 12,Rajasthan,Jaipur
+Elena,Kuznetsova,elena.k@example.com,Female,3334445566,30,September,1994,Biology,Sports,testpic.jpg,Sovetskaya 8,NCR,Gurgaon

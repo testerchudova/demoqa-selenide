@@ -21,5 +21,16 @@ dependencies {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        val includeTagsProperty = System.getProperty("includeTags")
+        val excludeTagsProperty = System.getProperty("excludeTags")
+
+        if (!includeTagsProperty.isNullOrBlank()) {
+            includeTags(*includeTagsProperty.split(",").map { it.trim() }.toTypedArray())
+        }
+
+        if (!excludeTagsProperty.isNullOrBlank()) {
+            excludeTags(*excludeTagsProperty.split(",").map { it.trim() }.toTypedArray())
+        }
+    }
 }
