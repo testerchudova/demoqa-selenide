@@ -17,7 +17,16 @@ dependencies {
 
     // ✅ Логи (SLF4J + Logback)
     testImplementation("ch.qos.logback:logback-classic:1.5.6")
+
     implementation ("com.github.javafaker:javafaker:1.0.2")
+
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation ("com.codeborne:selenide:7.2.3")
+    testImplementation ("com.codeborne:pdf-test:1.9.2")
+    testImplementation ("com.codeborne:xls-test:1.7.2")
+    testImplementation ("com.opencsv:opencsv:5.9")
+    testImplementation ("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    testImplementation("org.apache.poi:poi-ooxml:5.2.5")
 }
 
 tasks.test {
