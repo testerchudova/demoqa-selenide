@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.artifacts.Configuration
+
 plugins {
     id("java")
 }
@@ -9,37 +12,56 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation("com.codeborne:selenide:7.4.2")
+val aspectJVersion = "1.9.21"
 
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+val agent: Configuration by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = true
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    // ✅ Логи (SLF4J + Logback)
+    testImplementation("com.codeborne:selenide:7.4.2")
+
+    testImplementation("io.qameta.allure:allure-junit5:2.24.0")
+    testImplementation("io.qameta.allure:allure-selenide:2.24.0")
+
+    agent("org.aspectj:aspectjweaver:$aspectJVersion")
+
     testImplementation("ch.qos.logback:logback-classic:1.5.6")
-
-    implementation ("com.github.javafaker:javafaker:1.0.2")
-
-    testImplementation ("org.junit.jupiter:junit-jupiter:5.10.2")
-    testImplementation ("com.codeborne:selenide:7.2.3")
-    testImplementation ("com.codeborne:pdf-test:1.9.2")
-    testImplementation ("com.codeborne:xls-test:1.7.2")
-    testImplementation ("com.opencsv:opencsv:5.9")
-    testImplementation ("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    testImplementation("com.github.javafaker:javafaker:1.0.2")
+    testImplementation("com.codeborne:pdf-test:1.9.2")
+    testImplementation("com.codeborne:xls-test:1.7.2")
+    testImplementation("com.opencsv:opencsv:5.9")
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
     testImplementation("org.apache.poi:poi-ooxml:5.2.5")
 }
 
 tasks.test {
-    useJUnitPlatform {
-        val includeTagsProperty = System.getProperty("includeTags")
-        val excludeTagsProperty = System.getProperty("excludeTags")
+    useJUnitPlatform()
 
-        if (!includeTagsProperty.isNullOrBlank()) {
+    jvmArgs("-javaagent:${agent.singleFile}")
+
+    systemProperty("allure.results.directory", "$buildDir/allure-results")
+
+    val includeTagsProperty = System.getProperty("includeTags")
+    val excludeTagsProperty = System.getProperty("excludeTags")
+
+    if (!includeTagsProperty.isNullOrBlank()) {
+        useJUnitPlatform {
             includeTags(*includeTagsProperty.split(",").map { it.trim() }.toTypedArray())
         }
+    }
 
-        if (!excludeTagsProperty.isNullOrBlank()) {
+    if (!excludeTagsProperty.isNullOrBlank()) {
+        useJUnitPlatform {
             excludeTags(*excludeTagsProperty.split(",").map { it.trim() }.toTypedArray())
         }
     }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
 }
