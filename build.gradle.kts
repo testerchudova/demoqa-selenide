@@ -60,6 +60,7 @@ tasks.test {
             excludeTags(*excludeTagsProperty.split(",").map { it.trim() }.toTypedArray())
         }
     }
+
 }
 
 tasks.withType<JavaCompile>().configureEach {
