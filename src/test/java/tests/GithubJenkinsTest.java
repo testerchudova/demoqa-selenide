@@ -5,14 +5,14 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import testbase.GithubTestBase;
+import testbase.BaseJenkinsTest;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
-public class GithubJenkinsTest extends GithubTestBase {
+public class GithubJenkinsTest extends BaseJenkinsTest {
 
     private static final String REPOSITORY =
             "testerchudova/demoqa-selenide";
