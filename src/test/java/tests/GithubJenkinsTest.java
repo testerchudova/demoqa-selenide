@@ -21,7 +21,7 @@ public class GithubJenkinsTest extends GithubTestBase {
     private static final int ISSUE = 1;
 
     @Test
-    @Tag("jankins")
+    @Tag("jenkins")
     void testIssueWithLambdaSteps() {
 
 
