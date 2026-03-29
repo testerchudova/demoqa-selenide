@@ -22,9 +22,15 @@ public class Attach {
         url();
 
         if (videoEnabled && Selenide.sessionId() != null) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            videoUrl();
             addVideo();
         }
-    }
+        }
 
     @Attachment(value = "{attachName}", type = "image/png", fileExtension = ".png")
     public static byte[] screenshotAs(String attachName) {
