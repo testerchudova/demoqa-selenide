@@ -68,36 +68,23 @@ public class Attach {
 
     @Attachment(value = "Video URL", type = "text/plain")
     public static String videoUrl() {
-        return buildVideoUrl();
+        if (Selenide.sessionId() == null) {
+            return "No session id";
+        }
+        return "https://selenoid.autotests.cloud/video/" + Selenide.sessionId() + ".mp4";
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String addVideo() {
         return "<html><body><video width='100%' height='100%' controls autoplay>" +
-                "<source src='" + buildVideoUrl() + "' type='video/mp4'>" +
+                "<source src='" + getVideoUrl() + "' type='video/mp4'>" +
                 "</video></body></html>";
     }
 
-    private static String buildVideoUrl() {
-        String remoteUrl = System.getProperty("remoteUrl");
-
-        if (remoteUrl == null || remoteUrl.isBlank()) {
-            throw new RuntimeException("remoteUrl is empty");
-        }
-
-        if (Selenide.sessionId() == null) {
-            throw new RuntimeException("sessionId is null");
-        }
-
-        return remoteUrl.replace(
-                "/wd/hub",
-                "/video/" + Selenide.sessionId() + ".mp4"
-        );
-    }
-
     public static URL getVideoUrl() {
+        String videoUrl = "https://selenoid.autotests.cloud/video/" + Selenide.sessionId() + ".mp4";
         try {
-            return URI.create(buildVideoUrl()).toURL();
+            return URI.create(videoUrl).toURL();
         } catch (Exception e) {
             throw new RuntimeException("Failed to build video URL", e);
         }
