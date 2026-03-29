@@ -11,28 +11,15 @@ import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.Selenide.sessionId;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.codeborne.selenide.WebDriverRunner.url;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
-
-    public static void attachAll() {
-        screenshotAs("Last screenshot");
-        pageSource();
-        browserConsoleLogs();
-        currentUrl();
-
-        if (sessionId() != null) {
-            addVideo();
-        }
-    }
-
     @Attachment(value = "{attachName}", type = "image/png")
     public static byte[] screenshotAs(String attachName) {
         return ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Attachment(value = "Page source", type = "text/plain")
+    @Attachment(value = "Page source", type = "text/plain") // or text/html
     public static byte[] pageSource() {
         return getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
     }
@@ -49,21 +36,11 @@ public class Attach {
         );
     }
 
-    @Attachment(value = "URL", type = "text/plain")
-    public static String currentUrl() {
-        return url();
-    }
-
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String addVideo() {
-        URL videoUrl = getVideoUrl();
-
-        if (videoUrl == null) {
-            return "<html><body><p>Video is unavailable</p></body></html>";
-        }
-
-        return "<html><body><video width='100%' height='100%' controls autoplay>" +
-                "<source src='" + videoUrl + "' type='video/mp4'></video></body></html>";
+        return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
+                + getVideoUrl()
+                + "' type='video/mp4'></video></body></html>";
     }
 
     public static URL getVideoUrl() {
@@ -75,4 +52,5 @@ public class Attach {
         }
         return null;
     }
+
 }
