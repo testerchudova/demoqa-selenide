@@ -30,7 +30,7 @@ public class Attach {
             videoUrl();
             addVideo();
         }
-        }
+    }
 
     @Attachment(value = "{attachName}", type = "image/png", fileExtension = ".png")
     public static byte[] screenshotAs(String attachName) {
@@ -64,6 +64,14 @@ public class Attach {
     @Attachment(value = "URL", type = "text/plain")
     public static String url() {
         return WebDriverRunner.url();
+    }
+
+    @Attachment(value = "Video URL", type = "text/plain")
+    public static String videoUrl() {
+        if (Selenide.sessionId() == null) {
+            return "No session id";
+        }
+        return "https://selenoid.autotests.cloud/video/" + Selenide.sessionId() + ".mp4";
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
