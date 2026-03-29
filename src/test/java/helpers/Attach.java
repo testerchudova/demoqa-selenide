@@ -16,69 +16,20 @@ public class Attach {
     public static boolean videoEnabled = true;
 
     public static void attachAll() {
-        try {
-            screenshotAs("Last screenshot");
-        } catch (Exception e) {
-            System.out.println("Failed to attach screenshot: " + e.getMessage());
-        }
+        screenshotAs("Last screenshot");
+        pageSource();
+        browserConsoleLogs();
+        url();
 
-        try {
-            pageSource();
-        } catch (Exception e) {
-            System.out.println("Failed to attach page source: " + e.getMessage());
-        }
-
-        try {
-            browserConsoleLogs();
-        } catch (Exception e) {
-            System.out.println("Failed to attach browser logs: " + e.getMessage());
-        }
-
-        try {
-            url();
-        } catch (Exception e) {
-            System.out.println("Failed to attach url: " + e.getMessage());
-        }
-
-        if (isVideoAvailable()) {
+        if (videoEnabled && Selenide.sessionId() != null) {
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-
-            try {
-                videoUrl();
-            } catch (Exception e) {
-                System.out.println("Failed to attach video url: " + e.getMessage());
-            }
-
-            try {
-                addVideo();
-            } catch (Exception e) {
-                System.out.println("Failed to attach video: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Video attachment skipped: remoteUrl or sessionId is missing");
+            videoUrl();
+            addVideo();
         }
-    }
-
-    private static boolean isVideoAvailable() {
-        String remoteUrl = getRemoteUrl();
-        return videoEnabled
-                && remoteUrl != null
-                && !remoteUrl.isBlank()
-                && Selenide.sessionId() != null;
-    }
-
-    private static String getRemoteUrl() {
-        String remoteUrl = System.getProperty("remoteUrl");
-
-        if (remoteUrl == null || remoteUrl.isBlank()) {
-            remoteUrl = System.getProperty("selenide.remote");
-        }
-
-        return remoteUrl;
     }
 
     @Attachment(value = "{attachName}", type = "image/png", fileExtension = ".png")
@@ -128,14 +79,14 @@ public class Attach {
     }
 
     private static String buildVideoUrl() {
-        String remoteUrl = getRemoteUrl();
+        String remoteUrl = System.getProperty("remoteUrl");
 
         if (remoteUrl == null || remoteUrl.isBlank()) {
-            throw new IllegalStateException("remoteUrl is empty");
+            throw new RuntimeException("remoteUrl is empty");
         }
 
         if (Selenide.sessionId() == null) {
-            throw new IllegalStateException("sessionId is null");
+            throw new RuntimeException("sessionId is null");
         }
 
         return remoteUrl.replace(
