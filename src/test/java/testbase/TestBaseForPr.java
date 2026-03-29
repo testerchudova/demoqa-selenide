@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.util.Map;
+
 public class TestBaseForPr {
 
     @BeforeAll
@@ -31,8 +33,8 @@ public class TestBaseForPr {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
 
         String headless = System.getProperty("headless", "true");
         if ("true".equalsIgnoreCase(headless)) {
@@ -45,11 +47,11 @@ public class TestBaseForPr {
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-            capabilities.setCapability("selenoid:options", new java.util.HashMap<String, Object>() {{
-                put("enableVNC", true);
-                put("enableVideo", true);
-                put("enableLog", true);
-            }});
+            capabilities.setCapability("selenoid:options", Map.of(
+                    "enableVNC", true,
+                    "enableVideo", true,
+                    "enableLog", true
+            ));
 
             Configuration.browserCapabilities = capabilities;
         } else {
@@ -63,11 +65,7 @@ public class TestBaseForPr {
 
     @AfterEach
     void addAttachmentsAndCloseBrowser() {
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-        Attach.browserConsoleLogs();
-        Attach.addVideo();
-
+        Attach.attachAll();
         Selenide.closeWebDriver();
     }
 }

@@ -11,6 +11,13 @@ import java.io.ByteArrayInputStream;
 
 public class Attach {
 
+    public static void attachAll() {
+        screenshotAs("Last screenshot");
+        pageSource();
+        browserConsoleLogs();
+        addVideo();
+    }
+
     public static void screenshotAs(String name) {
         byte[] screenshot = ((TakesScreenshot) WebDriverRunner.getWebDriver())
                 .getScreenshotAs(OutputType.BYTES);
