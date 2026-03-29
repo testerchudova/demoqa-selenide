@@ -7,6 +7,7 @@ import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class TestBaseForPr {
@@ -15,7 +16,6 @@ public class TestBaseForPr {
     static void setupSelenideConfig() {
         Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
         Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserVersion = System.getProperty("browserVersion");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 10000;
@@ -23,11 +23,28 @@ public class TestBaseForPr {
         Configuration.screenshots = true;
         Configuration.savePageSource = true;
 
+        String browserVersion = System.getProperty("browserVersion");
+        if (browserVersion != null && !browserVersion.isBlank()) {
+            Configuration.browserVersion = browserVersion;
+        }
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-gpu");
+
+        String headless = System.getProperty("headless", "true");
+        if ("true".equalsIgnoreCase(headless)) {
+            options.addArguments("--headless=new");
+        }
+
         String remoteUrl = System.getProperty("remoteUrl");
         if (remoteUrl != null && !remoteUrl.isBlank()) {
             Configuration.remote = remoteUrl;
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             capabilities.setCapability("selenoid:options", new java.util.HashMap<String, Object>() {{
                 put("enableVNC", true);
                 put("enableVideo", true);
@@ -35,6 +52,8 @@ public class TestBaseForPr {
             }});
 
             Configuration.browserCapabilities = capabilities;
+        } else {
+            Configuration.browserCapabilities = options;
         }
 
         SelenideLogger.addListener("allure", new AllureSelenide()
