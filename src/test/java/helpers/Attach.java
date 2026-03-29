@@ -1,92 +1,78 @@
 package helpers;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.logging.LogType;
 
-import java.net.URI;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
+
+import static com.codeborne.selenide.Selenide.sessionId;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.url;
+import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
-
-    public static boolean videoEnabled = true;
 
     public static void attachAll() {
         screenshotAs("Last screenshot");
         pageSource();
         browserConsoleLogs();
-        url();
+        currentUrl();
 
-        if (videoEnabled && Selenide.sessionId() != null) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            videoUrl();
+        if (sessionId() != null) {
             addVideo();
         }
     }
 
-    @Attachment(value = "{attachName}", type = "image/png", fileExtension = ".png")
+    @Attachment(value = "{attachName}", type = "image/png")
     public static byte[] screenshotAs(String attachName) {
-        return ((TakesScreenshot) WebDriverRunner.getWebDriver())
-                .getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Attachment(value = "Page source", type = "text/html", fileExtension = ".html")
-    public static String pageSource() {
-        return WebDriverRunner.getWebDriver().getPageSource();
+    @Attachment(value = "Page source", type = "text/plain")
+    public static byte[] pageSource() {
+        return getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
     }
 
-    @Attachment(value = "Browser console logs", type = "text/plain")
-    public static String browserConsoleLogs() {
-        try {
-            var driver = WebDriverRunner.getWebDriver();
-            var availableLogTypes = driver.manage().logs().getAvailableLogTypes();
+    @Attachment(value = "{attachName}", type = "text/plain")
+    public static String attachAsText(String attachName, String message) {
+        return message;
+    }
 
-            if (!availableLogTypes.contains(LogType.BROWSER)) {
-                return "Browser logs not available. Available log types: " + availableLogTypes;
-            }
-
-            return driver.manage().logs().get(LogType.BROWSER).getAll().stream()
-                    .map(Object::toString)
-                    .collect(Collectors.joining("\n"));
-        } catch (Exception e) {
-            return "Failed to retrieve browser logs: " + e.getMessage();
-        }
+    public static void browserConsoleLogs() {
+        attachAsText(
+                "Browser console logs",
+                String.join("\n", Selenide.getWebDriverLogs(BROWSER))
+        );
     }
 
     @Attachment(value = "URL", type = "text/plain")
-    public static String url() {
-        return WebDriverRunner.url();
-    }
-
-    @Attachment(value = "Video URL", type = "text/plain")
-    public static String videoUrl() {
-        if (Selenide.sessionId() == null) {
-            return "No session id";
-        }
-        return "https://selenoid.autotests.cloud/video/" + Selenide.sessionId() + ".mp4";
+    public static String currentUrl() {
+        return url();
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String addVideo() {
+        URL videoUrl = getVideoUrl();
+
+        if (videoUrl == null) {
+            return "<html><body><p>Video is unavailable</p></body></html>";
+        }
+
         return "<html><body><video width='100%' height='100%' controls autoplay>" +
-                "<source src='" + getVideoUrl() + "' type='video/mp4'>" +
-                "</video></body></html>";
+                "<source src='" + videoUrl + "' type='video/mp4'></video></body></html>";
     }
 
     public static URL getVideoUrl() {
-        String videoUrl = "https://selenoid.autotests.cloud/video/" + Selenide.sessionId() + ".mp4";
+        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId() + ".mp4";
         try {
-            return URI.create(videoUrl).toURL();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to build video URL", e);
+            return new URL(videoUrl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }
