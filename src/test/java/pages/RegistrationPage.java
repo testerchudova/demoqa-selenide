@@ -40,6 +40,7 @@ public class RegistrationPage {
     public RegistrationPage removeBanners() {
         executeJavaScript("document.querySelector('#fixedban')?.remove()");
         executeJavaScript("document.querySelector('footer')?.remove()");
+        executeJavaScript("document.querySelector('#adplus-anchor')?.remove()");
         return this;
     }
 

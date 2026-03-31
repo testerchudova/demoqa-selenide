@@ -41,7 +41,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-
+    systemProperties(System.getProperties().mapKeys { it.key.toString() })
     jvmArgs("-javaagent:${agent.singleFile}")
 
     systemProperty("allure.results.directory", "$buildDir/allure-results")
