@@ -1,6 +1,5 @@
 {
-  "logo": "/allure-logo.png",
-  "base": {
+    "base": {
     "project": "DemoQA Tests",
     "environment": "Selenoid",
     "allureServiceUrl": "https://jenkins.autotests.cloud/job/40_%D1%81hudova_12Jenkens/allure/",
