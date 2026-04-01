@@ -1,0 +1,16 @@
+{
+  "logo": "/allure-logo.png",
+  "base": {
+    "project": "DemoQA Tests",
+    "environment": "Selenoid",
+    "allureServiceUrl": "https://jenkins.autotests.cloud/job/40_%D1%81hudova_12Jenkens/allure/",
+    "reportLink": "https://jenkins.autotests.cloud/job/40_%D1%81hudova_12Jenkens/allure/",
+    "language": "ru",
+    "messenger": "telegram"
+  },
+  "telegram": {
+    "token": "8680085986:AAH3aBl1fUFUi2lxHe1_oR6kx8ai4Os4BjM",
+    "chat": "-5181859823",
+    "replyTo": ""
+  }
+}
