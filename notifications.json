@@ -6,7 +6,10 @@
     "logo": "https://allurereports.com/images/allure-logo.png",
     "reportLink": "https://jenkins.autotests.cloud/job/40_%D1%81hudova_12Jenkens/allure/",
     "language": "ru",
-    "enableChart": true
+    "enableChart": true,
+    "comment": "Запуск тестов в Jenkins завершен",
+    "durationFormat": "HH:mm:ss.SSS",
+    "enableSuitesPublishing": false
   },
   "telegram": {
     "token": "8680085986:AAH3aBl1fUFUi2lxHe1_oR6kx8ai4Os4BjM",
