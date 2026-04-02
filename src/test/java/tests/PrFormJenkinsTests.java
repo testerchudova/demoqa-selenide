@@ -8,12 +8,13 @@ import pages.RegistrationPage;
 import testbase.TestBaseJenk;
 import testdata.TestData;
 
-@Tag("UI_V1")
+
 public class PrFormJenkinsTests extends TestBaseJenk {
 
     RegistrationPage registrationPage = new RegistrationPage();
 
     @Test
+    @Tag("UI_V1")
     @DisplayName("Успешное заполнение всех полей формы")
         void fillAllFieldsTest() {
         TestData data = new TestData();
