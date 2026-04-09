@@ -52,11 +52,6 @@ public class Attach {
         }
         return null;
     }
-    public static void attachAll() {
-        screenshotAs("Last screenshot");
-        pageSource();
-        browserConsoleLogs();
-        addVideo();
-    }
+
 
 }

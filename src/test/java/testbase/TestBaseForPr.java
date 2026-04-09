@@ -41,7 +41,10 @@ public class TestBaseForPr {
 
     @AfterEach
     void addAttachmentsAndCloseBrowser() {
-        Attach.attachAll();
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
         Selenide.closeWebDriver();
     }
 }
