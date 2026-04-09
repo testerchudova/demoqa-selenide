@@ -44,7 +44,10 @@ public class TestBaseJenk {
 
     @AfterEach
     void addAttachmentsAndCloseBrowser() {
-        Attach.attachAll();
-        closeWebDriver();
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
+        Selenide.closeWebDriver();
     }
 }
