@@ -3,10 +3,13 @@ import org.gradle.api.artifacts.Configuration
 
 plugins {
     id("java")
+    id("io.qameta.allure") version "2.11.2"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+
+allure {
+    version.set("2.24.0")
+}
 
 repositories {
     mavenCentral()
